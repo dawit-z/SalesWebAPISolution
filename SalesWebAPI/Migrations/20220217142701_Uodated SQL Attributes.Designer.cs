@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesWebAPI.Models;
 
 namespace SalesWebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217142701_Uodated SQL Attributes")]
+    partial class UodatedSQLAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,34 +76,6 @@ namespace SalesWebAPI.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SalesWebAPI.Models.Orderline", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(7,2)");
-
-                    b.Property<string>("Product")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Orderlines");
-                });
-
             modelBuilder.Entity("SalesWebAPI.Models.Order", b =>
                 {
                     b.HasOne("SalesWebAPI.Models.Customer", "Customer")
@@ -111,22 +85,6 @@ namespace SalesWebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("SalesWebAPI.Models.Orderline", b =>
-                {
-                    b.HasOne("SalesWebAPI.Models.Order", "Order")
-                        .WithMany("Orderlines")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("SalesWebAPI.Models.Order", b =>
-                {
-                    b.Navigation("Orderlines");
                 });
 #pragma warning restore 612, 618
         }
